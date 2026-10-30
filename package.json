@@ -1,0 +1,29 @@
+{
+  "name": "apex-internet-banking-microservices",
+  "version": "1.0.0",
+  "description": "Production-grade Internet Banking Microservices Architecture with API Gateway, Event Bus, Saga Orchestration, and Real-Time Dashboard",
+  "main": "runner.js",
+  "scripts": {
+    "start": "node runner.js",
+    "stop": "powershell -NoProfile -Command \"@(8080,8081,8082,8083,8084,8085,8086) | ForEach-Object { $p = (Get-NetTCPConnection -LocalPort $_ -ErrorAction SilentlyContinue).OwningProcess; if ($p) { Stop-Process -Id $p -Force -ErrorAction SilentlyContinue } }; Write-Output 'All microservices stopped.'\"",
+    "test": "node test-runner.js",
+    "seed": "node seed-data.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "ws": "^8.18.0"
+  },
+  "keywords": [
+    "microservices",
+    "fintech",
+    "internet-banking",
+    "saga-pattern",
+    "api-gateway",
+    "event-driven"
+  ],
+  "author": "Apex Banking Engineering",
+  "license": "MIT"
+}

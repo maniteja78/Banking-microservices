@@ -1,0 +1,184 @@
+[
+  {
+    "id": "acc-john-chk",
+    "userId": "usr-john-doe-001",
+    "accountNumber": "4010882314",
+    "iban": "US64APEX4010882314",
+    "type": "CHECKING",
+    "currency": "USD",
+    "balance": 18450,
+    "holdBalance": 0,
+    "status": "ACTIVE",
+    "cards": [
+      {
+        "id": "card-john-01",
+        "accountNumber": "4010882314",
+        "cardNumber": "4532 8812 9043 7120",
+        "cardholderName": "JOHN DOE",
+        "expiry": "08/29",
+        "cvv": "742",
+        "type": "VISA_PLATINUM_DEBIT",
+        "status": "ACTIVE",
+        "dailyLimit": 3000,
+        "onlinePurchases": true,
+        "internationalTransactions": true
+      }
+    ],
+    "createdAt": "2026-10-26T14:06:58.867Z",
+    "updatedAt": "2026-10-26T14:06:58.867Z"
+  },
+  {
+    "id": "acc-john-sav",
+    "userId": "usr-john-doe-001",
+    "accountNumber": "4088921105",
+    "iban": "US64APEX4088921105",
+    "type": "SAVINGS",
+    "currency": "USD",
+    "balance": 34200,
+    "holdBalance": 0,
+    "status": "ACTIVE",
+    "cards": [],
+    "createdAt": "2026-10-26T14:06:58.870Z",
+    "updatedAt": "2026-10-26T14:06:58.870Z"
+  },
+  {
+    "id": "acc-sarah-chk",
+    "userId": "usr-sarah-connor-002",
+    "accountNumber": "4055239912",
+    "iban": "US64APEX4055239912",
+    "type": "CHECKING",
+    "currency": "USD",
+    "balance": 9800,
+    "holdBalance": 0,
+    "status": "ACTIVE",
+    "cards": [
+      {
+        "id": "card-sarah-01",
+        "accountNumber": "4055239912",
+        "cardNumber": "5311 9420 1198 3341",
+        "cardholderName": "SARAH CONNOR",
+        "expiry": "11/28",
+        "cvv": "319",
+        "type": "MASTERCARD_GOLD_DEBIT",
+        "status": "ACTIVE",
+        "dailyLimit": 2000,
+        "onlinePurchases": true,
+        "internationalTransactions": false
+      }
+    ],
+    "createdAt": "2026-10-26T14:06:58.872Z",
+    "updatedAt": "2026-10-26T14:06:58.872Z"
+  },
+  {
+    "id": "8ed2230d-a849-4779-92e4-5604e8566804",
+    "userId": "a84654c6-2522-4d45-a969-273d6283ca87",
+    "accountNumber": "4073903605",
+    "iban": "US64APEX4073903605",
+    "type": "CHECKING",
+    "currency": "USD",
+    "balance": 5000,
+    "holdBalance": 0,
+    "status": "ACTIVE",
+    "cards": [
+      {
+        "id": "card-x1lq63z81",
+        "accountNumber": "4073903605",
+        "cardNumber": "4532 2188 6475 9673",
+        "cardholderName": "kmaniteja",
+        "expiry": "09/29",
+        "cvv": "420",
+        "type": "VISA_PLATINUM_DEBIT",
+        "status": "ACTIVE",
+        "dailyLimit": 2500,
+        "onlinePurchases": true,
+        "internationalTransactions": false
+      }
+    ],
+    "createdAt": "2026-10-26T14:14:57.627Z",
+    "updatedAt": "2026-10-26T14:14:57.627Z"
+  },
+  {
+    "id": "e5a8c0d8-9c1e-473f-b65a-1bdf0bd25e06",
+    "userId": "a84654c6-2522-4d45-a969-273d6283ca87",
+    "accountNumber": "4080251532",
+    "iban": "US64APEX4080251532",
+    "type": "SAVINGS",
+    "currency": "USD",
+    "balance": 12500,
+    "holdBalance": 0,
+    "status": "ACTIVE",
+    "cards": [],
+    "createdAt": "2026-10-26T14:14:57.629Z",
+    "updatedAt": "2026-10-26T14:14:57.629Z"
+  },
+  {
+    "id": "00b3f92b-0129-4e43-b6d9-6a6a21fc6885",
+    "userId": "e910517a-b21e-4ef8-927b-e2ef8dfbf916",
+    "accountNumber": "4031403165",
+    "iban": "US64APEX4031403165",
+    "type": "CHECKING",
+    "currency": "USD",
+    "balance": 5000,
+    "holdBalance": 0,
+    "status": "ACTIVE",
+    "cards": [
+      {
+        "id": "card-xrwlj5uht",
+        "accountNumber": "4031403165",
+        "cardNumber": "4532 7389 7917 5995",
+        "cardholderName": "teja",
+        "expiry": "09/29",
+        "cvv": "582",
+        "type": "VISA_PLATINUM_DEBIT",
+        "status": "ACTIVE",
+        "dailyLimit": 2500,
+        "onlinePurchases": true,
+        "internationalTransactions": false
+      }
+    ],
+    "createdAt": "2026-10-26T14:18:45.227Z",
+    "updatedAt": "2026-10-26T14:18:45.227Z"
+  },
+  {
+    "id": "21f298b2-ad64-455a-8315-0a16d615f24c",
+    "userId": "e910517a-b21e-4ef8-927b-e2ef8dfbf916",
+    "accountNumber": "4046833032",
+    "iban": "US64APEX4046833032",
+    "type": "SAVINGS",
+    "currency": "USD",
+    "balance": 12500,
+    "holdBalance": 0,
+    "status": "ACTIVE",
+    "cards": [],
+    "createdAt": "2026-10-26T14:18:45.234Z",
+    "updatedAt": "2026-10-26T14:18:45.234Z"
+  },
+  {
+    "id": "c500681e-2cff-4e40-a23e-314767718abd",
+    "userId": "usr-john-doe-001",
+    "accountNumber": "4026257920",
+    "iban": "US64APEX4026257920",
+    "type": "CHECKING",
+    "currency": "USD",
+    "balance": 500000,
+    "holdBalance": 0,
+    "status": "ACTIVE",
+    "cards": [
+      {
+        "id": "card-8ugxgd6it",
+        "accountNumber": "4026257920",
+        "cardNumber": "4532 2531 7656 5849",
+        "cardholderName": "John Doe",
+        "expiry": "09/29",
+        "cvv": "488",
+        "type": "VISA_PLATINUM_DEBIT",
+        "status": "ACTIVE",
+        "dailyLimit": 2500,
+        "onlinePurchases": true,
+        "internationalTransactions": false
+      }
+    ],
+    "createdAt": "2026-10-28T17:52:14.821Z",
+    "updatedAt": "2026-10-28T17:52:14.821Z"
+  }
+]

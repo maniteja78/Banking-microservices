@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">cls
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apex Internet Banking — Microservices Architecture</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="theme-dark">
+  <!-- Top Navigation Bar -->
+  <header class="top-nav">
+    <div class="nav-left">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 22 22 22"/></svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">APEX<span class="text-accent">BANK</span></span>
+          <span class="brand-sub">Microservices Mesh</span>
+        </div>
+      </div>
+
+      <div class="mesh-status-pill" id="globalMeshStatus" title="Click to view Microservices Topology">
+        <span class="status-dot pulsing"></span>
+        <span class="status-label">6 Services Online</span>
+        <span class="status-ping" id="globalLatency">3ms</span>
+      </div>
+    </div>
+
+    <!-- View Switcher Tabs -->
+    <div class="view-switcher">
+      <button class="view-btn active" data-view="customer">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Customer Banking</span>
+      </button>
+      <button class="view-btn" data-view="ops">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+        <span>Microservices Ops & Saga</span>
+        <span class="badge-accent">Live</span>
+      </button>
+    </div>
+
+    <div class="nav-right">
+      <!-- Quick Demo Persona Switcher -->
+      <div class="persona-dropdown">
+        <label>Persona:</label>
+        <select id="personaSelector" class="form-select">
+          <option value="john">John Doe (Checking & Savings)</option>
+          <option value="sarah">Sarah Connor (Recipient Demo)</option>
+          <option value="admin">Marcus Vance (Auditor / Admin)</option>
+          <option value="auth">🔑 Sign In / Register...</option>
+        </select>
+      </div>
+
+      <!-- Real-time Notifications Bell -->
+      <div class="notification-wrapper">
+        <button class="btn-icon" id="notifBellBtn" title="Notifications">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notif-badge hidden" id="notifBadge">0</span>
+        </button>
+        <div class="notif-dropdown hidden" id="notifDropdown">
+          <div class="notif-header">
+            <h4>Live Activity Alerts</h4>
+            <button class="btn-link" id="markAllReadBtn">Mark all read</button>
+          </div>
+          <div class="notif-list" id="notifList">
+            <div class="empty-state">No new notifications</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Profile Pill -->
+      <div class="user-pill" id="userPill">
+        <div class="user-avatar" id="userAvatar">JD</div>
+        <div class="user-meta">
+          <span class="user-name" id="userName">John Doe</span>
+          <span class="user-role badge-verified" id="userRole">Verified Customer</span>
+        </div>
+      </div>
+
+      <!-- Authentication Action Buttons -->
+      <button class="btn btn-sm btn-secondary" id="signOutBtn" title="Log out of current session">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span>Sign Out</span>
+      </button>
+      <button class="btn btn-sm btn-primary hidden" id="openAuthBtn">
+        <span>Sign In / Register</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="main-content">
+    
+    <!-- ========================================================= -->
+    <!-- VIEW 1: CUSTOMER INTERNET BANKING PORTAL                 -->
+    <!-- ========================================================= -->
+    <div class="view-container active" id="customerView">
+      
+      <!-- Top Balance & Quick Stats Banner -->
+      <section class="overview-banner">
+        <div class="net-worth-card">
+          <div class="card-eyebrow">
+            <span>Total Liquid Net Worth</span>
+            <button class="btn-icon-subtle" id="toggleBalanceVisibility" title="Toggle Privacy">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="balance-display">
+            <span class="currency">$</span>
+            <span class="amount" id="totalNetWorth">52,650.00</span>
+            <span class="currency-tag">USD</span>
+          </div>
+          <div class="growth-metric positive">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+            <span>+4.8% APY on Savings Account</span>
+          </div>
+
+          <div class="quick-actions-strip">
+            <button class="btn btn-primary" id="openSendMoneyBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              <span>Send Money</span>
+            </button>
+            <button class="btn btn-secondary" id="openDepositBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <span>Deposit Funds</span>
+            </button>
+            <button class="btn btn-secondary" id="openNewAccountBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              <span>Open Account</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3D Virtual Card Widget -->
+        <div class="virtual-card-container">
+          <div class="bank-card" id="creditCard">
+            <div class="card-front">
+              <div class="card-chip-strip">
+                <div class="emv-chip"></div>
+                <div class="contactless-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 16.5a5 5 0 0 1 0-7"/><path d="M12 19a9 9 0 0 0 0-14"/><path d="M15.5 21.5a13 13 0 0 0 0-19"/></svg>
+                </div>
+              </div>
+              <div class="card-number-mask" id="cardNumberDisplay">4532 •••• •••• 7120</div>
+              <div class="card-footer">
+                <div class="cardholder">
+                  <span class="label">CARDHOLDER</span>
+                  <span class="val" id="cardHolderNameDisplay">JOHN DOE</span>
+                </div>
+                <div class="card-expiry">
+                  <span class="label">EXPIRES</span>
+                  <span class="val" id="cardExpiryDisplay">08/29</span>
+                </div>
+                <div class="card-logo">VISA</div>
+              </div>
+            </div>
+            <div class="card-back hidden">
+              <div class="mag-stripe"></div>
+              <div class="cvv-strip">
+                <span>CVV</span>
+                <span class="cvv-val" id="cardCvvDisplay">742</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-quick-controls">
+            <div class="toggle-control">
+              <span class="label">Card Lock</span>
+              <label class="switch">
+                <input type="checkbox" id="cardLockToggle">
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="toggle-control">
+              <span class="label">Online Use</span>
+              <label class="switch">
+                <input type="checkbox" id="cardOnlineToggle" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Accounts Grid & Recent Ledger -->
+      <div class="portal-grid">
+        <!-- Accounts Section -->
+        <section class="accounts-section">
+          <div class="section-header">
+            <h3>Active Accounts</h3>
+            <span class="badge-neutral" id="accountCountBadge">2 Accounts</span>
+          </div>
+
+          <div class="accounts-list" id="accountsList">
+            <!-- Dynamic account cards inserted here -->
+          </div>
+        </section>
+
+        <!-- Transaction Ledger Section -->
+        <section class="ledger-section">
+          <div class="section-header">
+            <div>
+              <h3>Recent Transactions</h3>
+              <p class="section-subtitle">Real-time ledger synchronized across microservices</p>
+            </div>
+            <div class="ledger-actions">
+              <button class="btn btn-sm btn-secondary" id="exportCsvBtn">Export CSV</button>
+            </div>
+          </div>
+
+          <!-- Filter Strip -->
+          <div class="filter-strip">
+            <button class="filter-chip active" data-filter="ALL">All</button>
+            <button class="filter-chip" data-filter="TRANSFER">Transfers</button>
+            <button class="filter-chip" data-filter="DEPOSIT">Deposits</button>
+            <button class="filter-chip" data-filter="PAYMENT">Card Payments</button>
+          </div>
+
+          <div class="ledger-table-container">
+            <table class="ledger-table">
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>Reference / Saga</th>
+                  <th>Date & Time</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="transactionsTableBody">
+                <!-- Transactions dynamically inserted -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- VIEW 2: MICROSERVICES OPS & SAGA ORCHESTRATOR DASHBOARD    -->
+    <!-- ========================================================= -->
+    <div class="view-container" id="opsView">
+      
+      <!-- Microservice Topology Architecture Map -->
+      <section class="ops-panel">
+        <div class="ops-header">
+          <div>
+            <h3>Distributed Architecture & Service Mesh Topology</h3>
+            <p class="ops-subtitle">Real-time telemetry, circuit breaker states, and inter-service health</p>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="refreshTopologyBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            <span>Ping Services</span>
+          </button>
+        </div>
+
+        <div class="topology-grid" id="topologyGrid">
+          <!-- Gateway Node -->
+          <div class="service-node gateway-node">
+            <div class="node-head">
+              <span class="node-badge">REVERSE PROXY</span>
+              <span class="node-status online">ONLINE</span>
+            </div>
+            <h4>API Gateway</h4>
+            <div class="node-meta">
+              <span>Port: 8080</span>
+              <span class="latency">1ms</span>
+            </div>
+            <div class="node-routes">
+              <code>/api/*</code> • JWT • Circuit Breaker • Rate Limiter
+            </div>
+          </div>
+
+          <!-- Microservices Cards inserted dynamically -->
+        </div>
+      </section>
+
+      <!-- Two-Column Ops Grid: Saga Inspector & Real-time Kafka-style Event Bus Stream -->
+      <div class="ops-dual-grid">
+        
+        <!-- Distributed Saga Orchestrator Inspector -->
+        <section class="ops-panel saga-panel">
+          <div class="ops-header">
+            <div>
+              <h3>Saga Orchestration Simulator</h3>
+              <p class="ops-subtitle">Two-Phase fund transfers with automated compensating rollback</p>
+            </div>
+          </div>
+
+          <div class="saga-playground">
+            <p class="playground-desc">
+              Test how the Saga pattern behaves when an unexpected error occurs during credit phase:
+            </p>
+            <div class="playground-controls">
+              <button class="btn btn-primary" id="testNormalSagaBtn">
+                <span>1. Test Clean Saga Transfer ($150)</span>
+              </button>
+              <button class="btn btn-danger" id="testFailedSagaBtn">
+                <span>2. Simulate Failure & Auto Compensation Rollback</span>
+              </button>
+              <button class="btn btn-warning" id="testFraudTriggerBtn">
+                <span>3. Trigger AML Fraud Alert ($15,000)</span>
+              </button>
+            </div>
+
+            <!-- Saga Execution Flow Visualizer -->
+            <div class="saga-visualizer" id="sagaVisualizer">
+              <div class="visualizer-header">
+                <span class="label">Latest Saga Execution Steps:</span>
+                <span class="saga-ref" id="activeSagaRef">Awaiting run...</span>
+              </div>
+              <div class="saga-steps-stepper" id="sagaStepsStepper">
+                <div class="step-placeholder">Run a transfer to inspect step-by-step orchestrator execution.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Real-Time Kafka/Event Bus Stream Terminal -->
+        <section class="ops-panel terminal-panel">
+          <div class="ops-header">
+            <div>
+              <h3>Event Bus Live Stream (Port 8086)</h3>
+              <p class="ops-subtitle">Asynchronous domain events broadcast via SSE Pub/Sub</p>
+            </div>
+            <button class="btn-icon-subtle" id="clearTerminalBtn" title="Clear Console">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+
+          <div class="event-terminal" id="eventTerminal">
+            <div class="terminal-line system">[SYSTEM] Connected to Event Broker stream. Listening for microservice events...</div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Fraud & Risk Heuristics Monitor -->
+      <section class="ops-panel">
+        <div class="ops-header">
+          <div>
+            <h3>Fraud Detection & AML Risk Evaluation Cockpit</h3>
+            <p class="ops-subtitle">Synchronous heuristic rule engine checking velocity, volume & blacklist anomalies</p>
+          </div>
+        </div>
+
+        <div class="fraud-table-container">
+          <table class="ledger-table">
+            <thead>
+              <tr>
+                <th>Evaluation ID</th>
+                <th>Sender / Account</th>
+                <th>Target</th>
+                <th>Amount</th>
+                <th>Risk Score</th>
+                <th>Rule Flags</th>
+                <th>Decision</th>
+              </tr>
+            </thead>
+            <tbody id="fraudAlertsTableBody">
+              <!-- Dynamically populated from /api/fraud/alerts -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- USERS DATABASE & IDENTITY DIRECTORY -->
+      <section class="ops-panel">
+        <div class="ops-header">
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <h3>Users Database & Identity Directory</h3>
+              <span class="badge-accent">📁 data/auth.json</span>
+            </div>
+            <p class="ops-subtitle">Persistent user store managed exclusively by Auth Service (Database-Per-Service pattern)</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-secondary btn-sm" id="refreshUsersBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              <span>Refresh Directory</span>
+            </button>
+            <button class="btn btn-primary btn-sm" onclick="window.app.openAuthModal('register')">
+              + Register New User
+            </button>
+          </div>
+        </div>
+
+        <div class="ledger-table-container">
+          <table class="ledger-table">
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Full Name</th>
+                <th>Email Address</th>
+                <th>Phone</th>
+                <th>Role</th>
+                <th>KYC Status</th>
+                <th>Created At</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <!-- Dynamically populated from /api/auth/users -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- MODALS                                                    -->
+  <!-- ========================================================= -->
+
+  <!-- Sign In & Register Modal -->
+  <div class="modal-backdrop hidden" id="authModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h3 id="authModalTitle">Welcome to Apex Banking</h3>
+          <p class="section-subtitle">Microservices Auth Service (Port 8081)</p>
+        </div>
+        <button class="btn-close" id="closeAuthModal">&times;</button>
+      </div>
+
+      <!-- Auth Tabs: Sign In / Register -->
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab-btn active" id="tabSignInBtn">Sign In</button>
+        <button type="button" class="auth-tab-btn" id="tabRegisterBtn">Open New Account (Register)</button>
+      </div>
+
+      <!-- 1. SIGN IN FORM -->
+      <form id="signInForm">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="signInEmail" class="form-input" placeholder="name@bank.com" required value="john.doe@bank.com">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="signInPassword" class="form-input" placeholder="••••••••" required value="Password123!">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;" id="signInSubmitBtn">
+          <span>Sign In to Account</span>
+        </button>
+
+        <!-- Quick 1-Click Demo Logins -->
+        <div class="demo-logins-box">
+          <div class="demo-box-label">⚡ 1-Click Demo Logins:</div>
+          <div class="demo-buttons-grid">
+            <button type="button" class="btn btn-sm btn-secondary" onclick="window.app.quickLoginDemo('john')">
+              👤 John Doe (Checking & Savings)
+            </button>
+            <button type="button" class="btn btn-sm btn-secondary" onclick="window.app.quickLoginDemo('sarah')">
+              👩 Sarah Connor (Recipient Demo)
+            </button>
+            <button type="button" class="btn btn-sm btn-secondary" onclick="window.app.quickLoginDemo('admin')">
+              🛡️ Marcus Vance (Compliance Auditor)
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- 2. REGISTER NEW CUSTOMER FORM -->
+      <form id="registerForm" class="hidden">
+        <div class="form-group">
+          <label>Full Legal Name</label>
+          <input type="text" id="regFullName" class="form-input" placeholder="e.g. Alex Morgan" required>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="regEmail" class="form-input" placeholder="e.g. alex@example.com" required>
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="text" id="regPhone" class="form-input" placeholder="+1 (555) 019-2834" value="+1 (555) 345-6789">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="regPassword" class="form-input" placeholder="Create secure password" required minlength="6">
+        </div>
+        <div class="form-group">
+          <label>4-Digit Security Transaction PIN</label>
+          <input type="password" id="regPin" class="form-input" placeholder="4 digits (e.g. 1234)" maxlength="4" required>
+          <div class="field-hint">Used to authorize fund transfers and manage cards</div>
+        </div>
+        <div class="registration-perks">
+          ✨ Automatically provisions <strong>Checking Account</strong> ($5,000 credit) and <strong>Savings Account</strong> ($12,500) via Event Bus!
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" id="registerSubmitBtn">
+          <span>Create Account & Register</span>
+        </button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Send Money / Transfer Modal -->
+  <div class="modal-backdrop hidden" id="transferModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Transfer Funds</h3>
+        <button class="btn-close" id="closeTransferModal">&times;</button>
+      </div>
+      <form id="transferForm">
+        <div class="form-group">
+          <label>Source Account</label>
+          <select id="transferFromAccount" class="form-select" required></select>
+          <div class="field-hint" id="sourceBalanceHint">Available balance: $0.00</div>
+        </div>
+
+        <div class="form-group">
+          <label>Recipient Account Number</label>
+          <div class="input-with-action">
+            <input type="text" id="transferToAccount" class="form-input" placeholder="e.g. 4055239912" required>
+            <button type="button" class="btn btn-sm btn-secondary" id="quickPickSarahBtn">Select Sarah</button>
+          </div>
+          <div class="field-hint">Sarah Connor Demo Account: <code>4055239912</code></div>
+        </div>
+
+        <div class="form-group">
+          <label>Amount (USD)</label>
+          <div class="amount-input-wrapper">
+            <span class="currency-symbol">$</span>
+            <input type="number" id="transferAmount" class="form-input" placeholder="0.00" step="0.01" min="1" required>
+          </div>
+          <div class="amount-pills">
+            <button type="button" class="pill" data-amount="50">$50</button>
+            <button type="button" class="pill" data-amount="200">$200</button>
+            <button type="button" class="pill" data-amount="1000">$1,000</button>
+            <button type="button" class="pill" data-amount="5000">$5,000</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description / Memo</label>
+          <input type="text" id="transferDescription" class="form-input" placeholder="e.g. Rent, Freelance, Gift">
+        </div>
+
+        <div class="form-group">
+          <label>Security: Transaction PIN</label>
+          <input type="password" id="transferPin" class="form-input" placeholder="••••" maxlength="4" required>
+          <div class="field-hint">Demo PIN for John Doe: <code>1234</code></div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelTransferBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="confirmTransferBtn">
+            <span>Authorize Transfer</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Deposit Funds Modal -->
+  <div class="modal-backdrop hidden" id="depositModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Deposit Funds (Simulation)</h3>
+        <button class="btn-close" id="closeDepositModal">&times;</button>
+      </div>
+      <form id="depositForm">
+        <div class="form-group">
+          <label>Deposit To Account</label>
+          <select id="depositTargetAccount" class="form-select" required></select>
+        </div>
+        <div class="form-group">
+          <label>Amount to Credit ($)</label>
+          <input type="number" id="depositAmount" class="form-input" placeholder="1000.00" step="100" min="10" required>
+        </div>
+        <div class="form-group">
+          <label>Funding Source</label>
+          <select id="depositSource" class="form-select">
+            <option>External Clearing House (ACH)</option>
+            <option>ATM Cash Deposit</option>
+            <option>Wire Inflow</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelDepositBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Process Deposit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Open New Account Modal -->
+  <div class="modal-backdrop hidden" id="newAccountModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Open New Bank Account</h3>
+        <button class="btn-close" id="closeNewAccountModal">&times;</button>
+      </div>
+      <form id="newAccountForm">
+        <div class="form-group">
+          <label>Account Type</label>
+          <select id="newAccountType" class="form-select">
+            <option value="CHECKING">Everyday Checking Account (with Debit Card)</option>
+            <option value="SAVINGS">High-Yield Savings Account (4.8% APY)</option>
+            <option value="INVESTMENT">Brokerage & Investment Account</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Initial Deposit ($)</label>
+          <input type="number" id="newAccountDeposit" class="form-input" value="500" min="0" step="50">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelNewAccountBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Open Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Transaction Details & Saga Audit Modal -->
+  <div class="modal-backdrop hidden" id="sagaAuditModal">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <h3>Transaction Saga Audit Trail</h3>
+        <button class="btn-close" id="closeSagaAuditModal">&times;</button>
+      </div>
+      <div id="sagaAuditModalContent">
+        <!-- Step details dynamically rendered -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/ops-dashboard.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

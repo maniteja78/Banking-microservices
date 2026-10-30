@@ -1,0 +1,41 @@
+[
+  {
+    "id": "usr-john-doe-001",
+    "email": "john.doe@bank.com",
+    "passwordHash": "$2a$10$PGPfr9okjXFTvu85U.Fot.4eFZywqKP3k/B4Fu2djDMCdd3267blC",
+    "pinHash": "$2a$10$PGPfr9okjXFTvu85U.Fot.fchlrqJQUPkbSVfExQNfGWfmBe2tsXe",
+    "fullName": "John Doe",
+    "phone": "+1 (555) 234-5678",
+    "role": "customer",
+    "kycStatus": "VERIFIED",
+    "status": "ACTIVE",
+    "createdAt": "2026-10-26T13:34:09.551Z",
+    "updatedAt": "2026-10-26T13:34:09.552Z"
+  },
+  {
+    "id": "usr-sarah-connor-002",
+    "email": "sarah.connor@bank.com",
+    "passwordHash": "$2a$10$PGPfr9okjXFTvu85U.Fot.4eFZywqKP3k/B4Fu2djDMCdd3267blC",
+    "pinHash": "$2a$10$PGPfr9okjXFTvu85U.Fot.9AbC0bz5jYPBdgKyaeVWQgp5OXtI3Pu",
+    "fullName": "Sarah Connor",
+    "phone": "+1 (555) 876-5432",
+    "role": "customer",
+    "kycStatus": "VERIFIED",
+    "status": "ACTIVE",
+    "createdAt": "2026-10-26T13:34:09.554Z",
+    "updatedAt": "2026-10-26T13:34:09.554Z"
+  },
+  {
+    "id": "usr-admin-003",
+    "email": "admin@bank.com",
+    "passwordHash": "$2a$10$PGPfr9okjXFTvu85U.Fot.P766xft.x73hh1j5GzBElkmu6bhEZb6",
+    "pinHash": "$2a$10$PGPfr9okjXFTvu85U.Fot.TqrxUGzhITzz1aCMljRrmkcsNyzDmda",
+    "fullName": "Chief Auditor Marcus Vance",
+    "phone": "+1 (555) 999-0000",
+    "role": "admin",
+    "kycStatus": "VERIFIED",
+    "status": "ACTIVE",
+    "createdAt": "2026-10-26T13:34:09.555Z",
+    "updatedAt": "2026-10-26T13:34:09.555Z"
+  }
+]

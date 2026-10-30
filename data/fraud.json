@@ -1,0 +1,21 @@
+[
+  {
+    "id": "ae0e4e2b-5fee-4224-b694-cca14e204d06",
+    "transactionId": "TXN-FLAG-DEMO-001",
+    "userId": "usr-john-doe-001",
+    "fromAccount": "4010882314",
+    "toAccount": "4099999999",
+    "amount": 15000,
+    "riskScore": 75,
+    "decision": "REVIEW_REQUIRED",
+    "flags": [
+      {
+        "rule": "HIGH_VALUE_ANOMALY",
+        "message": "High value transaction ($15,000) flagged for AML compliance"
+      }
+    ],
+    "status": "PENDING_REVIEW",
+    "createdAt": "2026-10-26T10:06:58.890Z",
+    "updatedAt": "2026-10-26T14:06:58.890Z"
+  }
+]

@@ -1,0 +1,55 @@
+[
+  {
+    "id": "cadf13ed-d3e1-4c5b-9c54-36b57acc696d",
+    "userId": "usr-john-doe-001",
+    "title": "Salary Credited",
+    "message": "Your monthly salary deposit of $6,500.00 from Payroll was credited to Checking Account (4010882314).",
+    "type": "SUCCESS",
+    "category": "TRANSACTION",
+    "isRead": true,
+    "channel": "IN_APP_AND_SMS",
+    "createdAt": "2026-10-23T14:06:58.883Z",
+    "updatedAt": "2026-10-26T14:06:58.883Z"
+  },
+  {
+    "id": "73c38b5b-90e9-44e2-81b2-d5bcef698c2b",
+    "userId": "usr-john-doe-001",
+    "title": "Transfer Completed",
+    "message": "Successfully sent $450.00 to Sarah Connor (4055239912).",
+    "type": "SUCCESS",
+    "category": "TRANSACTION",
+    "isRead": false,
+    "channel": "IN_APP_AND_SMS",
+    "createdAt": "2026-10-24T14:06:58.884Z",
+    "updatedAt": "2026-10-26T14:06:58.887Z"
+  },
+  {
+    "id": "c8511135-ae88-417e-a6b1-3a57b5b22b4f",
+    "userId": "usr-john-doe-001",
+    "title": "Security Alert: New Device Login",
+    "message": "New sign-in detected from Chrome on Windows. If this was you, no action is needed.",
+    "type": "INFO",
+    "category": "SECURITY",
+    "isRead": false,
+    "channel": "IN_APP",
+    "createdAt": "2026-10-26T14:06:58.887Z",
+    "updatedAt": "2026-10-26T14:06:58.890Z"
+  },
+  {
+    "id": "53bd6a38-6eb2-4bb4-8e64-5c74c721b5e8",
+    "userId": "usr-john-doe-001",
+    "title": "Account Activated",
+    "message": "Your new Apex CHECKING Account (4026257920) is now open and active.",
+    "type": "INFO",
+    "category": "ACCOUNT",
+    "isRead": false,
+    "data": {
+      "accountNumber": "4026257920",
+      "type": "CHECKING"
+    },
+    "channel": "IN_APP_AND_SMS_SIMULATION",
+    "deliveredAt": "2026-10-28T17:52:14.847Z",
+    "createdAt": "2026-10-28T17:52:14.854Z",
+    "updatedAt": "2026-10-28T17:52:14.854Z"
+  }
+]

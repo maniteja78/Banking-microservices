@@ -1,0 +1,72 @@
+[
+  {
+    "id": "4d45df37-6e82-46b9-ac91-5574d8e7977c",
+    "referenceId": "TXN-INITIAL-001",
+    "userId": "usr-john-doe-001",
+    "senderUserId": "EXTERNAL_PAYROLL",
+    "recipientUserId": "usr-john-doe-001",
+    "fromAccount": "CLEARING_HOUSE_ACH",
+    "toAccount": "4010882314",
+    "amount": 6500,
+    "currency": "USD",
+    "description": "Corporate Monthly Salary Direct Deposit",
+    "type": "DEPOSIT",
+    "status": "COMPLETED",
+    "createdAt": "2026-10-23T14:06:58.873Z",
+    "updatedAt": "2026-10-26T14:06:58.873Z"
+  },
+  {
+    "id": "9e8c88d7-e9ab-45a4-b85a-696fde3b89ea",
+    "referenceId": "TXN-INITIAL-002",
+    "userId": "usr-john-doe-001",
+    "senderUserId": "usr-john-doe-001",
+    "recipientUserId": "usr-sarah-connor-002",
+    "fromAccount": "4010882314",
+    "toAccount": "4055239912",
+    "amount": 450,
+    "currency": "USD",
+    "description": "Dinner & Weekend Trip Split",
+    "type": "TRANSFER",
+    "status": "COMPLETED",
+    "createdAt": "2026-10-24T14:06:58.874Z",
+    "sagaSteps": [
+      {
+        "step": "VALIDATE_REQUEST",
+        "status": "SUCCESS"
+      },
+      {
+        "step": "FRAUD_EVALUATION",
+        "status": "SUCCESS"
+      },
+      {
+        "step": "DEBIT_SENDER",
+        "status": "SUCCESS"
+      },
+      {
+        "step": "CREDIT_RECIPIENT",
+        "status": "SUCCESS"
+      },
+      {
+        "step": "FINALIZE_LEDGER",
+        "status": "SUCCESS"
+      }
+    ],
+    "updatedAt": "2026-10-26T14:06:58.877Z"
+  },
+  {
+    "id": "15169df6-2baa-46b8-be71-40b1fef5de1c",
+    "referenceId": "TXN-INITIAL-003",
+    "userId": "usr-john-doe-001",
+    "senderUserId": "usr-john-doe-001",
+    "recipientUserId": null,
+    "fromAccount": "4010882314",
+    "toAccount": "MERCHANT_AMAZON_US",
+    "amount": 129.99,
+    "currency": "USD",
+    "description": "Tech Accessories Online Store",
+    "type": "PAYMENT",
+    "status": "COMPLETED",
+    "createdAt": "2026-10-25T14:06:58.879Z",
+    "updatedAt": "2026-10-26T14:06:58.882Z"
+  }
+]
